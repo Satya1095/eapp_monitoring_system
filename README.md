@@ -1,33 +1,43 @@
 # eapp_monitoring_system
-project
+
 PREREQUISITES:
     
 1.1) Make sure that python is installed. Type the following in the terminal:
-	python3 -V (version3) / python -V (other)
+
+	python3 -V (version3) / 
+	
+	python -V  (other)
 
 It will return the python version. If python is not present, download it from https://www.python.org/downloads/.
 
 1.2) Make sure that MySQL is running. To check the mysql version, type the following in terminal:
+	
 	mysql -V
 It will return the mysql version. If MySQL is not present, download it from https://dev.mysql.com/downloads/mysql/.
 
 
 2)   FLASK INSTALLATION:
 
-2.1) First install virtual environment:
-	sudo pip3 install virtualenv (version3) / sudo pip install virtualenv (other)
+2.1) First install virtual environment: (pip3 for python3 version)
+	
+	sudo pip install virtualenv 
+	
 
 2.2) Open the path, where you want to create your flask directory:
+
 	cd /path/app
 
 2.3) Create a directory to store all the libraries:
+
 	virtualenv hello_flask
 
 2.4) Activate the virtualenv:
+
 	source bin/activate
 
-2.5) Install Flask:
-	pip3 install flask (for python version3) / pip install flask (earlier versions)
+2.5) Install Flask: (pip3 for python version3)
+	
+	pip install flask 
  
 
 3)   MySQL SCHEMA:
@@ -35,6 +45,8 @@ It will return the mysql version. If MySQL is not present, download it from http
 In order to create mysql tables, you need to establish a connection using terminal.
 
 3.1) Run the following command to establish a mysql connection:
+
+
 	/usr/local/mysql/bin/mysql -uroot -p ( root is the user here)
 
 3.2) It will ask for your password. The user and password credentials are obtained during the installation of MySQL. Once you enter password, connection is established.
