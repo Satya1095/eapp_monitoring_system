@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>user</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+<style>
+    #h01 
+    {
+        color:navy;
+        font-size: 200;
+        text-align: center;
+    }
+    
+    #h02 
+    {
+        color:navy;
+        font-size: 200;
+        text-align: center;
+    }
+    
+    ul 
+    {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color:black;
+      
+    }
+    
+    li {
+      float: left;
+    }
+    
+    li a {
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      text-decoration: none;
+    }
+    
+    li a:hover {
+      background-color: navy;
+    }
+
+    .logout
+    {
+      position:absolute;
+      top: 8px;
+      right: 10px;
+    }
+</style>
+
+</head>
+
+<body > 
+  <h1 id="h01"> <img src="/static/monitoring_icon.jpg" width="70" height="70"> <br>
+    E-APP MONITORING SYSTEM</h1> 
+  <ul>
+    <li><a href="userdata" >User Data</a></li>
+    <li><a href="graph" >Graph</a></li>
+    <li><a href="map">Map</a></li>  
+    <li><a href="logout">Logout</a></li>   
+  </ul>
+       
+  <h3>Welcome, {{ NAME }}
+  <br>UserID: {{ ID }}</h3>
+    
+</body>
+
+</html>

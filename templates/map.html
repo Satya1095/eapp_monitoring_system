@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+
+  <style>
+  #h01 {
+    color:navy;
+    font-size: 200;
+    text-align: center;
+  }
+
+  ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color:black;
+  }
+
+  li {
+  float: left;
+  }
+
+  li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 15px;
+  text-decoration: none;
+  }
+
+  li a:hover {
+  background-color: navy;
+  }
+  
+  #map {
+  height: 400px;
+  width: 400px;
+  }
+  </style>
+</head>
+
+<body> 
+  <h1 id="h01"> <img src="/static/monitoring_icon.jpg" width="70" height="70"> <br>
+        E-APP MONITORING SYSTEM</h1> 
+  <ul>
+    <li><a href="userdata" >User Data</a></li>
+    <li><a href="graph" >Graph</a></li>
+    <li><a href="map">Map</a></li>
+    <li><a href="logout">Logout</a></li>  
+  </ul>
+
+  <h3>Welcome, {{ NAME }}
+        <br>UserID: {{ ID }}</h3>
+     <center>  
+    <div id="map"></div>
+    </center>
+    <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC_Q7ZPtlCx89fC_4vWPOoUeZEBnDcS9rA&callback=initMap">
+    </script>
+    
+    <script>
+      // locations
+      var locations = [
+        {lat: 42.6525, lng: -73.7562},
+        {lat: 40.730610, lng: -73.935242},
+        {lat: 34.052235, lng: -118.243683},
+        {lat: 42.331429, lng: -83.045753},
+        {lat: 46.827316 , lng: -95.848160},
+        {lat: 43.68239 , lng: -83.0488},
+        {lat: 42.363258, lng:  -83.093269},
+        {lat: 40.728157, lng: -74.077644},
+        {lat: 33.227345, lng: -97.128113},
+        {lat: 36.29086, lng: -96.342476},
+        {lat: 33.579166, lng: -101.886909},
+        {lat: 30.235317, lng: -95.460320},
+        {lat: 30.616829, lng: -96.338844},
+        {lat: 42.215202, lng: -85.705109},
+        {lat: 31.000000, lng: -100.000000},
+        ]
+
+      function initMap() {
+        var initial_map, name, map_markers, Cluster;
+        // array of characters used to label map locations
+        name = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        coordinates = {lat: 42.6525, lng: -73.7562}
+        // create map
+        initial_map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 2,
+        center: coordinates
+        });
+
+        // for each location l, a marker is created from the array name.
+          map_markers = locations.map(function(l, i) {
+          return new google.maps.Marker({
+          position: l,
+          x: name[i % name.length]
+          });
+        });
+
+        // Marker Clustering
+        Cluster = new MarkerClusterer(initial_map, map_markers,
+            {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+      }
+        
+    </script>
+     
+</body>
+
+</html>
