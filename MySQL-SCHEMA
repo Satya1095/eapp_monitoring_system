@@ -1,0 +1,126 @@
+MySQL SCHEMA:
+
+1) USER:
+
+CREATE TABLE User 
+( 
+UserId INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
+UserName VARCHAR(30) NOT NULL, 
+UserPassword VARCHAR(30) NOT NULL, 
+UserEmail VARCHAR(30) NOT NULL, 
+UserTypeId INT NOT NULL,
+UNIQUE KEY User(UserEmail),
+CONSTRAINT FK_UserUserType FOREIGN KEY User(UserTypeId) REFERENCES UserType(UserTypeId)
+);
+
+2) USER TYPE:
+
+CREATE TABLE UserType
+(
+	UserTypeId INT NOT NULL  AUTO_INCREMENT PRIMARY KEY,
+	UserType VARCHAR(20) NOT NULL
+);
+
+3) LOCATION:
+
+CREATE TABLE Location
+(
+LocationId INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+UserId INT NOT NULL,
+Longtitude DECIMAL(9,7) NOT NULL,
+Altitude DECIMAL(10,7) NOT NULL,
+Latitude DECIMAL(9,7) NOT NULL,
+Bearing DECIMAL(10,7),
+BearingAccuracy DECIMAL(10,7),
+VerticalAccuracy DECIMAL(10,7),
+SpeedAccuracy DECIMAL(10,7),
+Provider VARCHAR(50),
+Speed DECIMAL(10,7),
+SpeedAccuracyMetersPerSecond DECIMAL(10,7),
+VerticalAccuracyMeters DECIMAL(10,7),
+Time BIGINT NOT NULL,
+CONSTRAINT FK_LocationUser FOREIGN KEY Location(UserId) REFERENCES User(UserId)
+);
+
+4) BLUETOOTH:
+
+CREATE TABLE Bluetooth
+(
+	BluetoothId INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	UserId INT NOT NULL,
+	Name VARCHAR(30) NOT NULL,
+	Type INT NOT NULL,
+	Address VARCHAR (50) NOT NULL,
+	CONSTRAINT FK_BluetoothUser FOREIGN KEY Bluetooth(UserId) REFERENCES User(UserId)
+);
+
+5) INCIDENT TYPE:
+
+CREATE TABLE IncidentType
+(
+	IncidentTypeId INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	IncidentType VARCHAR(50) NOT NULL UNIQUE KEY 
+);
+
+6) PEER-TO-PEER:
+
+CREATE TABLE PeerToPeer
+(
+	TransactionId INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	SenderId INT NOT NULL,
+	ReceiverId INT NOT NULL,
+	IncidentId INT NOT NULL,
+	CONSTRAINT FK_SenderUser FOREIGN KEY PeerToPeer(SenderId) REFERENCES User(UserId),
+	CONSTRAINT FK_ReceiverUser FOREIGN KEY PeerToPeer(ReceiverId) REFERENCES User(UserId),
+	CONSTRAINT FK_IncidentTransferred FOREIGN KEY PeerToPeer(IncidentId) REFERENCES Incident(IncidentId),
+	UNIQUE KEY PeerToPeer(SenderId,ReceiverId,IncidentId)
+);
+
+7) WIFI:
+
+CREATE TABLE Wifi
+(
+	WifiId INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	UserId INT NOT NULL,
+	ChannelWidth INT NOT NULL,
+	SSID VARCHAR(50) NOT NULL,
+	BSSID VARCHAR(50) NOT NULL,
+	Level INT NOT NULL,
+	Frequency INT NOT NULL,
+	CenterFreq0 INT NOT NULL,
+	CenterFreq1 INT NOT NULL,
+	Capabilities VARCHAR(50) NOT NULL,
+	ChannelWidth20 INT NOT NULL,
+	ChannelWidth40 INT NOT NULL,
+	ChannelWidth80 INT NOT NULL,
+	ChannelWidth160 INT NOT NULL,
+	ChannelWidth80Plus INT NOT NULL,
+	CONSTRAINT FK_WifiUser FOREIGN KEY Wifi(UserId) REFERENCES User(UserId)
+);
+
+8) INCIDENT EXCHANGE:
+
+CREATE TABLE `IncidentExchange` (
+  `IncidentId` int(11) NOT NULL,
+  `UserId` int(11) NOT NULL,
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Uploaded data` int(11) DEFAULT NULL,
+  `Downloaded data` int(11) DEFAULT NULL,
+  `Timestamp` datetime NOT NULL,
+  PRIMARY KEY (`Id`),
+  KEY `IncidentId_idx` (`IncidentId`),
+  KEY `UserId_idx` (`UserId`),
+  CONSTRAINT `IncidentId` FOREIGN KEY (`IncidentId`) REFERENCES `incident` (`IncidentId`),
+  CONSTRAINT `UserId` FOREIGN KEY (`UserId`) REFERENCES `user` (`UserId`)
+) ENGINE=InnoDB AUTO_INCREMENT=707 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+9) INCIDENT:
+
+CREATE TABLE `Incident` (
+  `IncidentId` int(11) NOT NULL,
+  `Incident` varchar(45) NOT NULL,
+  `IncidentTypeId` int(11) NOT NULL,
+  PRIMARY KEY (`IncidentId`),
+  KEY `IncidentTypeId_idx` (`IncidentTypeId`),
+  CONSTRAINT `IncidentTypeId` FOREIGN KEY (`IncidentTypeId`) REFERENCES `incidenttype` (`IncidentTypeId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
